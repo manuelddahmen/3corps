@@ -17,7 +17,7 @@ public class Force2 extends Force {
         setFusion(false);
         this.t = time;
         amortissement = 0.0;
-        setG(6.67430e-11);
+        setG(1.0);
     }
 
     @Override
@@ -41,11 +41,13 @@ public class Force2 extends Force {
             if (courante.masse <= 0.0) {
                 set.vitesse = courante.vitesse;
                 set.position = courante.position.plus(set.vitesse.mult(getDt()));
+                courant2.add(set);
                 continue;
             }
             Point3D force = force(i);
             set.vitesse = courante.vitesse.plus((force.mult(1.0 / courante.masse)).mult(getDt()));
-            set.position = courante.position.plus(courante.vitesse.mult(getDt()));
+            set.position = courante.position.plus(set.vitesse.mult(getDt()));
+            courant2.add(set);
         }
         setCourant(courant2);
         t = t + getDt();
